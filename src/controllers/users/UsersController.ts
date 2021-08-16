@@ -22,10 +22,9 @@ export class UsersController {
         try{
             const data = await this.userService.getUserByEmail(`${email}`)
             let message = `user fetched successfully`
-            if(data == null){
+            if(data === null || data === undefined){
                 message = `user with ${email} does not exist`
             }
-            this.log.debug(data)
             return response.body(ResponseWrapper.SuccessResponse(`${message}`,data))
         }catch (e:any){
            const data = null
@@ -35,10 +34,12 @@ export class UsersController {
     }
 
     @Get('/')
+    @Summary("This endpoint loads users from Almond Backend system")
+    @Description("Return all users")
     async getAllUsers(@Res() response: PlatformResponse) {
         try{
             const users = await this.userService.getAllUsersFromAlmond()
-            return response.body(ResponseWrapper.SuccessResponse(`Fetched Succesfully`, users))
+            return response.body(ResponseWrapper.SuccessResponse(`Fetched Successfully`, users))
         } catch (e: any){
             const data = null
             return response.body(ResponseWrapper.FailResponse(`Failed to load users ${e.message}`, data))

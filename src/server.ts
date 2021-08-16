@@ -1,5 +1,4 @@
 import {
-    BeforeRoutesInit,
     Configuration,
     Inject,
     PlatformAcceptMimesMiddleware,
@@ -14,6 +13,8 @@ import "@tsed/ajv";
 import {CustomResponseFilter} from "./ResponseFilter";
 import * as cors from "cors";
 import {SwaggerModule} from "@tsed/swagger";
+import {mongooseConfig} from "./utils/configs/mongo";
+import {swaggerConfig} from "./utils/configs/swagger";
 
 const rootDir = __dirname;
 
@@ -40,27 +41,11 @@ const rootDir = __dirname;
     },
     ajv: {
         errorFormatter: (error) => `At ${error.modelName}${error.params}, value '${error.data}' ${error.message}`,
-        verbose: true
+        verbose: false
     },
-    swagger: [
-        {
-            path: "/api-docs"
-        }
-    ],
-    mongoose: [
-        {
-            id: "almond", // Recommended: define default connection. All models without dbName will be assigned to this connection
-            url: "mongodb://127.0.0.1:27017/almond",
-            connectionOptions: {
-                useNewUrlParser: true,
-                useUnifiedTopology: true,
-                useCreateIndex: true,
-            }
-        }
-    ],
-    imports: [
-        SwaggerModule
-    ]
+    swagger: swaggerConfig,
+    mongoose: mongooseConfig,
+    imports: [SwaggerModule]
 })
 
 export class Server{
