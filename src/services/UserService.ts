@@ -8,9 +8,12 @@ import {UserRepository} from "../repositories/UserRepository";
 export class UserService{
     constructor(@Inject() private userRepository: UserRepository) {
     }
-
     async getUserByEmail(email: string) {
         const list = await this.userRepository.findByEmail(email);
         return list[0]
+    }
+
+    async getAllUsersFromAlmond(): Promise<AlmondUsers[]>{
+        return  await this.userRepository.findAll();
     }
 }

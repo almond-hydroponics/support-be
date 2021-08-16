@@ -1,4 +1,10 @@
-import {Configuration, Inject, PlatformApplication} from "@tsed/common";
+import {
+    BeforeRoutesInit,
+    Configuration,
+    Inject,
+    PlatformAcceptMimesMiddleware,
+    PlatformApplication
+} from "@tsed/common";
 import * as bodyParser from "body-parser";
 import * as compress from "compression";
 import * as cookieParser from "cookie-parser";
@@ -6,14 +12,16 @@ import * as methodOverride from "method-override";
 import "@tsed/mongoose";
 import "@tsed/ajv";
 import {CustomResponseFilter} from "./ResponseFilter";
+import * as cors from "cors";
+import {SwaggerModule} from "@tsed/swagger";
 
 const rootDir = __dirname;
 
 @Configuration({
     rootDir,
     acceptMimes: ["application/json"],
-    httpPort: "127.0.0.1:8081",
-    httpsPort: "127.0.0.1:8082",
+    httpPort: process.env.PORT || 3000,
+    httpsPort: false, // CHANGE
     componentsScan: [
         `${rootDir}/services/**/**.ts`,
         `${rootDir}/middlewares/**/**.ts`
@@ -34,6 +42,11 @@ const rootDir = __dirname;
         errorFormatter: (error) => `At ${error.modelName}${error.params}, value '${error.data}' ${error.message}`,
         verbose: true
     },
+    swagger: [
+        {
+            path: "/api-docs"
+        }
+    ],
     mongoose: [
         {
             id: "almond", // Recommended: define default connection. All models without dbName will be assigned to this connection
@@ -44,9 +57,13 @@ const rootDir = __dirname;
                 useCreateIndex: true,
             }
         }
+    ],
+    imports: [
+        SwaggerModule
     ]
 })
-export class Server {
+
+export class Server{
     @Inject()
     app: PlatformApplication;
 
@@ -59,6 +76,8 @@ export class Server {
      */
     public $beforeRoutesInit(): void | Promise<any> {
         this.app
+            .use(cors())
+            .use(PlatformAcceptMimesMiddleware)
             .use(cookieParser())
             .use(compress({}))
             .use(methodOverride())
@@ -66,5 +85,7 @@ export class Server {
             .use(bodyParser.urlencoded({
                 extended: true
             }));
+
+        return null;
     }
 }

@@ -11,4 +11,8 @@ export class UserRepository {
     async findByEmail(email:string): Promise<any> {
         return await this.almondUser.find({email}).exec();
     }
+
+    async findAll(): Promise<AlmondUsers[]> {
+        return await this.almondUser.find().exec()
+    }
 }
