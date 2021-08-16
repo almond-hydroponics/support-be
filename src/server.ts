@@ -13,8 +13,8 @@ import "@tsed/ajv";
 import {CustomResponseFilter} from "./ResponseFilter";
 import * as cors from "cors";
 import {SwaggerModule} from "@tsed/swagger";
-import {mongooseConfig} from "./utils/configs/mongo";
-import {swaggerConfig} from "./utils/configs/swagger";
+import {mongooseConfig} from "./configs/mongo";
+import {swaggerConfig} from "./configs/swagger";
 
 const rootDir = __dirname;
 
