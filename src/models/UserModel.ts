@@ -1,7 +1,22 @@
-import {Email, Format, Maximum, MaxLength, Minimum, MinLength, Pattern, Required} from "@tsed/schema";
+import {
+    Any,
+    CollectionOf,
+    Email,
+    Format, Ignore,
+    Maximum,
+    MaxLength,
+    Minimum,
+    MinLength,
+    Pattern,
+    Property,
+    Required
+} from "@tsed/schema";
 
 export class UserModel {
-    @MaxLength(20)
+    @Property()
+    _id: string;
+
+    @MaxLength(50)
     @MinLength(3)
     @Required()
     currentRole: string;
@@ -33,7 +48,18 @@ export class UserModel {
     createdAt: Date;
     @Format("date")
     updatedAt: Date;
+    @Required()
+    @Property()
+    @CollectionOf(String)
     roles: string[];
+    @Property()
+    @Required()
     isVerified: boolean;
+    @Property()
+    @Required()
+    @CollectionOf(String)
     devices: any[];
+
+    @Ignore()
+    isDeleted: boolean
 }

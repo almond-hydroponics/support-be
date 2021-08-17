@@ -2,12 +2,11 @@ import {Controller, Get, Inject, PathParams, PlatformResponse, QueryParams, Res}
 import {UserService} from "../../services/UserService";
 import {LoggerService} from "../../services/LoggerService";
 import {Description, email, Format, Name, Required, Returns, Summary} from "@tsed/schema";
-import {AlmondUsers} from "../../entities/AlmondUsers";
+import {AlmondUser} from "../../models/AlmondUser";
 import {ResponseWrapper} from "../../utils/ResponseWrapper";
-import {response} from "express";
 
 @Controller("/users")
-@Name('Users')
+@Name('User Controller')
 export class UsersController {
     log = new LoggerService("UserController")
 
@@ -17,8 +16,8 @@ export class UsersController {
     @Get('/user')
     @Summary("This endpoint loads a user and his roles from Almond Backend system")
     @Description("Return a user with a given email")
-    @Returns(200, AlmondUsers)
-    async getUserByEmail(@Res() response: PlatformResponse, @Format("email") @Required() @QueryParams("email") email: string): Promise<PlatformResponse<AlmondUsers>> {
+    @Returns(200, AlmondUser)
+    async getUserByEmail(@Res() response: PlatformResponse, @Format("email") @Required() @QueryParams("email") email: string): Promise<PlatformResponse<AlmondUser>> {
         try{
             const data = await this.userService.getUserByEmail(`${email}`)
             let message = `user fetched successfully`

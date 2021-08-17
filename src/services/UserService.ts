@@ -1,7 +1,7 @@
 import {Injectable} from "@tsed/di";
 import {Inject} from "@tsed/common";
 import {MongooseModel} from "@tsed/mongoose";
-import {AlmondUsers} from "../entities/AlmondUsers";
+import {AlmondUser} from "../models/AlmondUser";
 import {UserRepository} from "../repositories/UserRepository";
 
 @Injectable()
@@ -13,7 +13,7 @@ export class UserService{
         return list[0]
     }
 
-    async getAllUsersFromAlmond(): Promise<AlmondUsers[]>{
+    async getAllUsersFromAlmond(): Promise<AlmondUser[]>{
         return  await this.userRepository.findAll();
     }
 }

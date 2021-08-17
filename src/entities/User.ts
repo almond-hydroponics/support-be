@@ -1,8 +1,8 @@
-import {Email, Format, Maximum, MaxLength, Minimum, MinLength, Property, Required} from "@tsed/schema";
+import {Email, Format, Ignore, Maximum, MaxLength, Minimum, MinLength, Property, Required} from "@tsed/schema";
 import {Column, Entity, PrimaryGeneratedColumn} from "typeorm";
-import {ObjectID} from "@tsed/mongoose";
+import {Model, ObjectID} from "@tsed/mongoose";
 
-@Entity()
+@Model()
 export class User {
     @PrimaryGeneratedColumn()
     @ObjectID()
@@ -48,5 +48,8 @@ export class User {
     roles: string[];
     isVerified: boolean;
     devices: any[];
+
+    @Ignore()
+    isDeleted: boolean
 
 }
