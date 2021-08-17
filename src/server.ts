@@ -10,7 +10,7 @@ import * as cookieParser from "cookie-parser";
 import * as methodOverride from "method-override";
 import "@tsed/mongoose";
 import "@tsed/ajv";
-import {CustomResponseFilter} from "./ResponseFilter";
+import {CustomResponseFilter} from "./utils/ResponseFilter";
 import * as cors from "cors";
 import {SwaggerModule} from "@tsed/swagger";
 import {mongooseConfig} from "./configs/mongo";
