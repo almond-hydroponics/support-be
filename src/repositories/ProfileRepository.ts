@@ -6,6 +6,7 @@ import {LoggerService} from "../services/LoggerService";
 
 export class ProfileRepository{
     log = new LoggerService("ProfileRepository")
+
     @Inject(User)
     private userModel: MongooseModel<User>
 
