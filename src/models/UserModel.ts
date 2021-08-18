@@ -1,7 +1,7 @@
 import {
     Any,
-    CollectionOf,
-    Email,
+    CollectionOf, Description,
+    Email, Example,
     Format, Ignore,
     Maximum,
     MaxLength,
@@ -9,8 +9,10 @@ import {
     MinLength,
     Pattern,
     Property,
-    Required
+    Required, Title
 } from "@tsed/schema";
+import {ObjectID, Ref} from "@tsed/mongoose";
+import {Role} from "../entities/Role";
 
 export class UserModel {
     @Property()
@@ -42,16 +44,16 @@ export class UserModel {
     @MaxLength(20)
     email: string;
 
-    @Format("date")  // or date-time, etc...
+    @Format("date-time")  // or date-time, etc...
     createDate: Date;
-    @Format("date")
+    @Format("date-time")
     createdAt: Date;
-    @Format("date")
+    @Format("date-time")
     updatedAt: Date;
     @Required()
     @Property()
     @CollectionOf(String)
-    roles: string[];
+    roles: ObjectID[];
     @Property()
     @Required()
     isVerified: boolean;
@@ -59,7 +61,4 @@ export class UserModel {
     @Required()
     @CollectionOf(String)
     devices: any[];
-
-    @Ignore()
-    isDeleted: boolean
 }

@@ -1,34 +1,34 @@
 
 import {User} from "../entities/User";
 import {Inject} from "@tsed/common";
-import {MongooseModel} from "@tsed/mongoose";
+import {MongooseModel, ObjectID} from "@tsed/mongoose";
 import {LoggerService} from "../services/LoggerService";
 
 export class ProfileRepository{
     log = new LoggerService("ProfileRepository")
-
-    @Inject(User)
-    private userModel: MongooseModel<User>
+    constructor(@Inject(User)
+                private use: MongooseModel<User>) {
+    }
 
     async createOrUpdateProfile(profile: User){
-        if(profile._id.length > 0){
-            return this.userModel.findByIdAndUpdate(profile._id, profile);
+        if(profile._id !== undefined){
+            return this.use.findByIdAndUpdate(profile._id, profile);
         }else{
-            return this.userModel.create(profile);
+            return this.use.create(profile);
         }
     }
 
     async findProfiles(){
-        return this.userModel.find({isDeleted: false}).exec()
+        return this.use.find({activeProfile: true}).exec()
     }
 
     async findProfileById(_id: string){
-        return this.userModel.find({_id: _id}).exec()
+        return this.use.find({_id: _id}).exec()
     }
 
     async deleteProfile(_id: string){
         this.log.debug(`User Profile to be deleted ${_id}`)
-        return this.userModel.findByIdAndDelete(_id).exec()
+        return this.use.findByIdAndDelete(_id).exec()
     }
 
 }

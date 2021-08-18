@@ -1,12 +1,12 @@
-import {Controller, Get, Inject, PathParams, PlatformResponse, QueryParams, Res} from "@tsed/common";
-import {UserService} from "../../services/UserService";
-import {LoggerService} from "../../services/LoggerService";
-import {Description, email, Format, Name, Required, Returns, Summary} from "@tsed/schema";
-import {AlmondUser} from "../../models/AlmondUser";
-import {ResponseWrapper} from "../../utils/ResponseWrapper";
+import {Controller, Get, Inject,PlatformResponse, QueryParams, Res} from "@tsed/common";
+import {UserService} from "../services/UserService";
+import {LoggerService} from "../services/LoggerService";
+import {Description,Format, Name, Required, Returns, Summary} from "@tsed/schema";
+import {AlmondUser} from "../models/AlmondUser";
+import {ResponseWrapper} from "../utils/ResponseWrapper";
 
 @Controller("/users")
-@Name('User Controller')
+@Name('Users Controller')
 export class UsersController {
     log = new LoggerService("UserController")
 
