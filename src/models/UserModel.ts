@@ -1,7 +1,7 @@
 import {
     Any,
-    CollectionOf,
-    Email,
+    CollectionOf, Description,
+    Email, Example,
     Format, Ignore,
     Maximum,
     MaxLength,
@@ -9,7 +9,7 @@ import {
     MinLength,
     Pattern,
     Property,
-    Required
+    Required, Title
 } from "@tsed/schema";
 
 export class UserModel {
@@ -59,7 +59,4 @@ export class UserModel {
     @Required()
     @CollectionOf(String)
     devices: any[];
-
-    @Ignore()
-    isDeleted: boolean
 }

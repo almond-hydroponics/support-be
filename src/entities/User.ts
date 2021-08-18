@@ -1,55 +1,71 @@
-import {Email, Format, Ignore, Maximum, MaxLength, Minimum, MinLength, Property, Required} from "@tsed/schema";
+import {
+    Default,
+    Email,
+    Format,
+    Ignore,
+    Maximum,
+    MaxLength,
+    Minimum,
+    MinLength,
+    Name,
+    Property,
+    Required
+} from "@tsed/schema";
 import {Column, Entity, PrimaryGeneratedColumn} from "typeorm";
-import {Model, ObjectID} from "@tsed/mongoose";
+import {Model, ObjectID, Unique} from "@tsed/mongoose";
 
-@Model()
+@Model({name:'users'})
+@Name('users')
 export class User {
-    @PrimaryGeneratedColumn()
     @ObjectID()
     @Property()
-    _id: string;
+    _id: ObjectID;
 
-    @Column()
+    @Property()
     @MaxLength(100)
     @Required()
     firstName: string;
 
-    @Column()
+    @Property()
     @MaxLength(100)
     @Required()
     lastName: string;
 
-    @Column()
+    @Property()
+    @Unique()
     @Minimum(0)
     @Maximum(100)
-    age: number;
+    email: string;
 
-    @Column()
-    @Minimum(0)
-    @Maximum(100)
-    email: number;
-
-    @MaxLength(20)
+    @MaxLength(100)
     @MinLength(3)
     @Required()
-    currentRole: string;
+    @Property()
+    @ObjectID()
+    currentRole: ObjectID;
 
     @MaxLength(13)
     @MinLength(8)
     @Required()
+    @Unique()
     phoneNumber: string;
 
-    @Format("date")  // or date-time, etc...
+    @Property()
+    @Format("date-time")  // or date-time, etc...
     createDate: Date;
-    @Format("date")
+    @Property()
+    @Format("date-time")
     createdAt: Date;
-    @Format("date")
+    @Property()
+    @Format("date-time")
     updatedAt: Date;
-    roles: string[];
+    @Property()
+    roles: ObjectID[];
+    @Property()
     isVerified: boolean;
-    devices: any[];
-
-    @Ignore()
-    isDeleted: boolean
-
+    @Property()
+    devices: ObjectID[];
+    @Property()
+    @Default(true)
+    activeProfile: boolean
 }

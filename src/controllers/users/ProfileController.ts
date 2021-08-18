@@ -14,16 +14,16 @@ export class ProfileController{
     @Inject()
     userService: ProfileService
 
-    @Post('/createOrUpdate')
-    async createUserProfile(@Res() response: PlatformResponse, @BodyParams() userModel: UserModel){
+    @Post('/createUpdate')
+    async createOrUpdateProfile(@Res() response: PlatformResponse, @BodyParams() userModel: UserModel){
         const profile = await this.userService.createProfile(userModel).then((data) => {
             return JSON.stringify(data)
         })
         return response.body(ResponseWrapper.SuccessResponse(`Record Created Successfully`,profile))
     }
 
-    @Get("/list")
-    async getAllProfiles(@Res() response: PlatformResponse){
+    @Get("/profiles")
+    async getProfiles(@Res() response: PlatformResponse){
         try{
             const profiles = await this.userService.findAllProfiles()
             return response.body(ResponseWrapper.SuccessResponse(`Records fetched successfully`,profiles))
@@ -32,8 +32,8 @@ export class ProfileController{
         }
     }
 
-    @Get("/getById")
-    async findById(@Res() response: PlatformResponse, @Required() @QueryParams('_id') _id: string){
+    @Get("/getProfile")
+    async findProfileById(@Res() response: PlatformResponse, @Required() @QueryParams('_id') _id: string){
         try{
             const profiles = await this.userService.findById(_id)
             return response.body(ResponseWrapper.SuccessResponse(`Record fetched successfully`,profiles))
