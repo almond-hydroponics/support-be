@@ -3,9 +3,11 @@ import {Inject} from "@tsed/common";
 import {ProfileRepository} from "../repositories/ProfileRepository";
 import {UserModel} from "../models/UserModel";
 import {User} from "../entities/User";
+import {LoggerService} from "./LoggerService";
 
 @Injectable()
 export class ProfileService {
+    log = new LoggerService("Profile Service")
     constructor(@Inject() private profileRepository: ProfileRepository) {}
 
     async createProfile(profile: UserModel) : Promise<UserModel>{
@@ -17,6 +19,7 @@ export class ProfileService {
 
     async findAllProfiles() : Promise<UserModel[]>{
         const profiles = await this.profileRepository.findProfiles().then((data) => {
+            this.log.error(' ===> log' + data)
             return data
         })
         return JSON.parse(JSON.stringify(profiles))

@@ -19,7 +19,7 @@ export class ProfileRepository{
     }
 
     async findProfiles(){
-        return this.use.find({isDeleted: false}).exec()
+        return this.use.find({activeProfile: true}).exec()
     }
 
     async findProfileById(_id: string){

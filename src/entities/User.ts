@@ -12,7 +12,8 @@ import {
     Required
 } from "@tsed/schema";
 import {Column, Entity, PrimaryGeneratedColumn} from "typeorm";
-import {Model, ObjectID, Unique} from "@tsed/mongoose";
+import {Model, ObjectID, Ref, Unique} from "@tsed/mongoose";
+import {Role} from "./Role";
 
 @Model({name:'users'})
 @Name('users')
@@ -60,7 +61,8 @@ export class User {
     @Format("date-time")
     updatedAt: Date;
     @Property()
-    roles: ObjectID[];
+    @Ref(Role)
+    roles: Ref<Role>[];
     @Property()
     isVerified: boolean;
     @Property()

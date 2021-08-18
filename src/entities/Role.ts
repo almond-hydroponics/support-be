@@ -1,13 +1,15 @@
-import {CollectionOf, Default, Name, Property, Required} from "@tsed/schema";
+import {CollectionOf, Default, Enum, Name, Property, Required} from "@tsed/schema";
 import {Model, ObjectID} from "@tsed/mongoose";
+import {AccessCategoryEnum} from "../enums/AccessCategoryEnum";
 
 class ResourceAccessLevel {
     @Property()
-    @Default('CUSTOMER')
-    name: string
+    @Default('CLIENT')
+    @Enum(AccessCategoryEnum)
+    category: AccessCategoryEnum;
 
     @Property()
-    @Default('Customer Default')
+    @Default(AccessCategoryEnum.CLIENT)
     description: string
 }
 

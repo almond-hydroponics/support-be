@@ -1,14 +1,13 @@
 import {BodyParams, Controller, Delete, Get, Inject, PlatformResponse, Post, QueryParams, Res} from "@tsed/common";
-import {LoggerService} from "../../services/LoggerService";
+import {LoggerService} from "../services/LoggerService";
 import {Name, Required} from "@tsed/schema";
-import {UserService} from "../../services/UserService";
-import {UserModel} from "../../models/UserModel";
-import {ProfileService} from "../../services/ProfileService";
-import {ResponseWrapper} from "../../utils/ResponseWrapper";
+import {UserModel} from "../models/UserModel";
+import {ProfileService} from "../services/ProfileService";
+import {ResponseWrapper} from "../utils/ResponseWrapper";
 
 @Controller('/profile')
-@Name('Profile Controller')
-export class ProfileController{
+@Name('Profiles Controller')
+export class ProfilesController {
     log = new LoggerService("ProfileController")
 
     @Inject()
