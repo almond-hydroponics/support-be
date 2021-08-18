@@ -21,7 +21,7 @@ export class Role{
     @Required()
     @Property()
     @Default(false)
-    deleted: boolean;
+    isDeleted: boolean;
 
     @Required()
     @Property()

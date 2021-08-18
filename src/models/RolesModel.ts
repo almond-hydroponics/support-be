@@ -24,10 +24,9 @@ export class RolesModel{
     @Property()
     _id: ObjectID;
 
-    @Required()
     @Property()
     @Default(false)
-    deleted: boolean;
+    isDeleted: boolean;
 
     @Required()
     @Property()
