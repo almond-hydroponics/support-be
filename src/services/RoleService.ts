@@ -25,7 +25,7 @@ export class RoleService {
         return JSON.parse(JSON.stringify(roles))
     }
 
-    async findById(_id: string) : Promise<RolesModel>{
+    async findById(_id) : Promise<RolesModel>{
         const role = await this.roleRepository.findRoleById(_id).then((data) => {
             return data
         })

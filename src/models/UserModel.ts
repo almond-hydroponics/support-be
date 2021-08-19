@@ -53,7 +53,7 @@ export class UserModel {
     @Required()
     @Property()
     @CollectionOf(String)
-    roles: ObjectID[];
+    roles: string[];
     @Property()
     @Required()
     isVerified: boolean;

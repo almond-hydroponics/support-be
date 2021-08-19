@@ -15,10 +15,15 @@ export class RolesController {
 
     @Post('/createUpdate')
     async createOrUpdateRole(@Res() response: PlatformResponse, @BodyParams() roleModel: RolesModel){
-        const role = await this.roleService.createOrUpdateRole(roleModel).then((data) => {
-            return JSON.stringify(data)
-        })
-        return response.body(ResponseWrapper.SuccessResponse(`Record Created Successfully`,role))
+        try{
+            const role = await this.roleService.createOrUpdateRole(roleModel).then((data) => {
+                return JSON.stringify(data)
+            })
+            return response.body(ResponseWrapper.SuccessResponse(`Record Created Successfully`,role))
+        }catch (e) {
+            return response.body(ResponseWrapper.FailResponse(`There was an error creating the record. Details:`, e.message))
+        }
+
     }
 
     @Get("/roles")
@@ -27,7 +32,7 @@ export class RolesController {
             const roles = await this.roleService.findRoles()
             return response.body(ResponseWrapper.SuccessResponse(`Records fetched successfully`,roles))
         }catch (e: any){
-            return response.body(ResponseWrapper.SuccessResponse(`Failed to fetch`,e.message))
+            return response.body(ResponseWrapper.FailResponse(`Failed to fetch`,e.message))
         }
     }
 
@@ -37,7 +42,7 @@ export class RolesController {
             const role = await this.roleService.findById(_id)
             return response.body(ResponseWrapper.SuccessResponse(`Record fetched successfully`,role))
         }catch (e: any){
-            return response.body(ResponseWrapper.SuccessResponse(`Failed to fetch records for id ${_id}`,e.message))
+            return response.body(ResponseWrapper.FailResponse(`Failed to fetch records for id ${_id}`,e.message))
         }
     }
 
@@ -47,7 +52,7 @@ export class RolesController {
             const role = await this.roleService.deleteRole(_id)
             return response.body(ResponseWrapper.SuccessResponse(`Record deleted successfully`,role))
         }catch (e: any){
-            return response.body(ResponseWrapper.SuccessResponse(`Failed to delete profile with id ${_id}`,e.message))
+            return response.body(ResponseWrapper.FailResponse(`Failed to delete profile with id ${_id}`,e.message))
         }
     }
 }

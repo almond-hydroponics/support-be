@@ -15,10 +15,15 @@ export class ProfilesController {
 
     @Post('/createUpdate')
     async createOrUpdateProfile(@Res() response: PlatformResponse, @BodyParams() userModel: UserModel){
-        const profile = await this.userService.createProfile(userModel).then((data) => {
-            return JSON.stringify(data)
-        })
-        return response.body(ResponseWrapper.SuccessResponse(`Record Created Successfully`,profile))
+        try{
+            const profile = await this.userService.createProfile(userModel).then((data) => {
+                return JSON.stringify(data)
+            })
+            return response.body(ResponseWrapper.SuccessResponse(`Record Created Successfully`,profile))
+        }
+        catch (e) {
+            return response.body(ResponseWrapper.FailResponse(`There was an error creating the record`, e.message))
+        }
     }
 
     @Get("/profiles")

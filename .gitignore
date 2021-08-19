@@ -3,3 +3,5 @@ dist
 *-lock.json
 yarn-error.log
 yarn.lock
+*.lock
+yarn.lock

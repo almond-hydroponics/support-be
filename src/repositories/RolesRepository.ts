@@ -2,6 +2,8 @@ import {LoggerService} from "../services/LoggerService";
 import {Inject} from "@tsed/common";
 import {MongooseModel} from "@tsed/mongoose";
 import {Role} from "../entities/Role";
+import { ObjectId } from "mongodb";
+import {Exception, NotFound} from "@tsed/exceptions";
 
 export class RolesRepository{
     log = new LoggerService("RolesRepository")
@@ -22,12 +24,14 @@ export class RolesRepository{
         return this.model.find({isDeleted: false}).exec()
     }
 
-    async findRoleById(_id: string){
-        return this.model.find({_id: _id}).exec()
+    async findRoleById(_id){
+       const role = await this.model.findOne({_id: _id}).then()
+        if(!role)
+            throw new Exception(200,`Role ${_id} was not found in the database`)
+        return role
     }
 
     async deleteRole(_id: string){
-        this.log.debug(`Role to be deleted ${_id}`)
         return this.model.findByIdAndUpdate(_id,{$set:{isDeleted:true}}).exec()
     }
 }
