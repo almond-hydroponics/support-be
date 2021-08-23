@@ -2,18 +2,21 @@
 import {PlatformExpress} from "@tsed/platform-express";
 import {Server} from "./server";
 import {LoggerService} from "./services/LoggerService";
-const log = new LoggerService("ServerBootstrap")
+const log = new LoggerService("Server Configs")
 async function bootstrap() {
     try {
-        log.debug("Start server...");
-        const platform = await PlatformExpress.bootstrap(Server, {
-            // extra settings
+        log.info("===> Starting server...!");
+        log.info("===> Initialising...!");
+        const platform = await PlatformExpress.bootstrap(Server, {});
+        await platform.listen().then(() => {
+            log.info("===> Initialising Done!");
         });
-        await platform.listen();
-        log.debug("Server initialized");
     } catch (er) {
+        log.error("===> Failed to start Server...!");
         log.error(er);
     }
 }
 
-bootstrap().then(r => console.log('done bootstrapping'));
+bootstrap().then(() => {
+    log.info("===> Server Configurations loaded successfully !");
+});

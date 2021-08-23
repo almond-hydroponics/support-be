@@ -14,7 +14,7 @@ class ResourceAccessLevel {
     description: string
 }
 
-@Model({name:'roles'})
+@Model({name:'support_roles'})
 @Name('roles')
 export class Role{
     @ObjectID()

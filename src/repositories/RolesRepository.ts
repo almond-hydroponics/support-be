@@ -2,8 +2,7 @@ import {LoggerService} from "../services/LoggerService";
 import {Inject} from "@tsed/common";
 import {MongooseModel} from "@tsed/mongoose";
 import {Role} from "../entities/Role";
-import { ObjectId } from "mongodb";
-import {Exception, NotFound} from "@tsed/exceptions";
+import {Exception} from "@tsed/exceptions";
 
 export class RolesRepository{
     log = new LoggerService("RolesRepository")

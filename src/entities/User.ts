@@ -15,7 +15,7 @@ import {Column, Entity, PrimaryGeneratedColumn} from "typeorm";
 import {Model, ObjectID, Ref, Unique} from "@tsed/mongoose";
 import {Role} from "./Role";
 
-@Model({name:'users'})
+@Model({name:'support_users'})
 @Name('users')
 export class User {
     @ObjectID()

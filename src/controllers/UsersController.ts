@@ -6,7 +6,7 @@ import {AlmondUser} from "../models/AlmondUser";
 import {ResponseWrapper} from "../utils/ResponseWrapper";
 
 @Controller("/users")
-@Name('Users Controller')
+@Name('Almond Users Controller')
 export class UsersController {
     log = new LoggerService("UserController")
 
