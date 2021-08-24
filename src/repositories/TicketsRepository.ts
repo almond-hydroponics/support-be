@@ -6,22 +6,20 @@ import {Exception} from "@tsed/exceptions";
 
 export class TicketsRepository{
 
-    log = new LoggerService("TicketsRepository")
+    log = new LoggerService("Tickets Repository")
 
     constructor(@Inject(Ticket)
                 private ticketModel: MongooseModel<Ticket>) {
     }
 
     async createOrUpdateTicket(ticket: Ticket){
-        if(ticket._id !== undefined){
-            return this.ticketModel.findByIdAndUpdate(ticket._id, ticket);
-        }else{
-            return this.ticketModel.create(ticket);
-        }
+        if(ticket._id !== undefined)
+            return await this.ticketModel.findByIdAndUpdate(ticket._id, ticket).exec();
+        return await this.ticketModel.create(ticket);
     }
 
     async findTickets(){
-        return this.ticketModel.find({isDeleted: false}).exec()
+        return await this.ticketModel.find({isDeleted: false}).exec()
     }
 
     async findByTicketNumber(ticketNo: string){
@@ -39,12 +37,10 @@ export class TicketsRepository{
     }
 
     async deleteTicket(_id: string){
-        return this.ticketModel.findByIdAndUpdate(_id,{isDeleted: true},(err,doc) => {
-            if(err){
+        return await this.ticketModel.findByIdAndUpdate(_id,{isDeleted: true},(err,doc) => {
+            if(err)
                 throw new Exception(200, `There was an error performing the operation`)
-            }else{
-                this.log.debug(`User ticket to be deleted ${_id}`)
-            }
+            this.log.debug(`User ticket to be deleted ${_id}`)
         }).exec()
     }
 

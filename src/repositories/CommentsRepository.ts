@@ -14,11 +14,9 @@ export class CommentsRepository{
     {}
 
     async createOrUpdateComment(cm: Comments){
-        if(cm._id !== undefined){
-            return this.model.findByIdAndUpdate(cm._id, cm);
-        }else{
-            return this.model.create(cm);
-        }
+        if(cm._id !== undefined)
+            return await this.model.findByIdAndUpdate(cm._id, cm).exec()
+        return this.model.create(cm);
     }
 
     async findCommentByUserId(userId){
@@ -29,7 +27,7 @@ export class CommentsRepository{
     }
 
     async deleteComment(_id: string){
-        return this.model.findByIdAndUpdate(_id,{isDeleted:true},(err,model) => {
+        return await this.model.findByIdAndUpdate(_id,{isDeleted:true},(err,model) => {
             if(err)
                 throw new Exception(200,`There was a problem updating comment`)
             return model
