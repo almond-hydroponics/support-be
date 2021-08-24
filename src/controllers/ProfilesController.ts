@@ -19,7 +19,7 @@ export class ProfilesController {
             const profile = await this.userService.createProfile(userModel).then((data) => {
                 return JSON.stringify(data)
             })
-            return response.body(ResponseWrapper.SuccessResponse(`Record Created Successfully`,profile))
+            return response.body(ResponseWrapper.SuccessResponse(`Operation was Successful`,profile))
         }
         catch (e) {
             return response.body(ResponseWrapper.FailResponse(`There was an error creating the record`, e.message))

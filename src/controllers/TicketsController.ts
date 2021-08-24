@@ -22,7 +22,7 @@ export class TicketsController {
             const tickets = await this.ticket.createOrUpdateTicket(ticket).then((data) => {
                 return JSON.stringify(data)
             })
-            return response.body(ResponseWrapper.SuccessResponse(`Record Created Successfully`,tickets))
+            return response.body(ResponseWrapper.SuccessResponse(`Operation was Successful`,tickets))
         }catch (e) {
             return response.body(ResponseWrapper.FailResponse(`There was an error creating the record. Details:`, e.message))
         }

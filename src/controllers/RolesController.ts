@@ -19,7 +19,7 @@ export class RolesController {
             const role = await this.roleService.createOrUpdateRole(roleModel).then((data) => {
                 return JSON.stringify(data)
             })
-            return response.body(ResponseWrapper.SuccessResponse(`Record Created Successfully`,role))
+            return response.body(ResponseWrapper.SuccessResponse(`Operation was Successful`,role))
         }catch (e) {
             return response.body(ResponseWrapper.FailResponse(`There was an error creating the record. Details:`, e.message))
         }

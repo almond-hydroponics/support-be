@@ -40,7 +40,7 @@ const rootDir = __dirname;
         ]
     },
     ajv: {
-        errorFormatter: (error) => `At ${error.modelName}${error.params}, value '${error.data}' ${error.message}`,
+        errorFormatter: (error) => ` Model: ->  ${error.modelName} \n Parameter -> ${error.params} \n Error -> ${error.data} \n Message -> ${error.message}`,
         verbose: false
     },
     swagger: swaggerConfig,
