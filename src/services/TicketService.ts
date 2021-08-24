@@ -21,7 +21,10 @@ export class TicketService {
 
     async createOrUpdateTicket(ticket: TicketModel) : Promise<TicketModel>{
         const t: Ticket = JSON.parse(JSON.stringify(ticket))
-        await this.ticketRepository.findByTicketById(t.linkedIssueId);
+
+        if(t.linkedIssueId)
+            await this.ticketRepository.findByTicketById(t.linkedIssueId);
+
         await this.profileService.findById(t.userId);
         await this.profileService.findById(t.assigneeId).then(async (data) => {
             for(let r in data.roles){
