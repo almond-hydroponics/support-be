@@ -25,22 +25,27 @@ export class TicketsRepository{
     }
 
     async findByTicketNumber(ticketNo: string){
-        const ticket = await this.ticketModel.findOne({ticketNo: ticketNo}).then()
+        const ticket = await this.ticketModel.findOne({ticketNo: ticketNo, isDeleted: false}).then()
         if(!ticket)
             throw new Exception(200,`Ticket ${ticketNo} was not found in the database`)
         return ticket
     }
 
     async findByTicketById(_id: string){
-        const ticket = await this.ticketModel.findOne({_id: _id}).then()
+        const ticket = await this.ticketModel.findOne({_id: _id, isDeleted: false}).then()
         if(!ticket)
             throw new Exception(200,`Ticket ${_id} was not found in the database`)
         return ticket
     }
 
     async deleteTicket(_id: string){
-        this.log.debug(`User ticket to be deleted ${_id}`)
-        return this.ticketModel.findByIdAndDelete(_id).exec()
+        return this.ticketModel.findByIdAndUpdate(_id,{isDeleted: true},(err,doc) => {
+            if(err){
+                throw new Exception(200, `There was an error performing the operation`)
+            }else{
+                this.log.debug(`User ticket to be deleted ${_id}`)
+            }
+        }).exec()
     }
 
 }

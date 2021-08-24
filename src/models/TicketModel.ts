@@ -1,30 +1,12 @@
-import {
-    Default, Enum,
-    Format,
-    MaxLength,
-    Minimum,
-    MinLength,
-    Name,
-    Property,
-    Required
-} from "@tsed/schema";
-import {Model, ObjectID, PreHook, Ref, Unique} from "@tsed/mongoose";
+import {ObjectID, Unique} from "@tsed/mongoose";
+import {Default, Enum, Format, MaxLength, Minimum, MinLength, Property, Required} from "@tsed/schema";
 import {Statuses} from "../enums/Statuses";
 import {Priorities} from "../enums/Priorities";
 import {Categories} from "../enums/Categories";
 
-@Model({name:'support_tickets'})
-@Name('SupportTicket')
-@PreHook("save", (ticket: Ticket, next: any) => {
-    if (ticket.escalatedToUser) {
-        ticket.escalated = true;
-    }
-    next();
-})
-export class Ticket {
-    @ObjectID()
+export class TicketModel{
     @Property()
-    _id: ObjectID;
+    _id: string;
 
     @Property()
     @MaxLength(20)
