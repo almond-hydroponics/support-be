@@ -1,4 +1,4 @@
-import {Model, ObjectID} from "@tsed/mongoose";
+import {Model, ObjectID, Unique} from "@tsed/mongoose";
 import {MaxLength, MinLength, Name, Property, Required} from "@tsed/schema";
 
 @Model({name:'support_ticket_comments'})
@@ -6,11 +6,13 @@ import {MaxLength, MinLength, Name, Property, Required} from "@tsed/schema";
 export class Comments{
     @ObjectID()
     @Property()
+    @Unique()
     _id: ObjectID;
 
     @Property()
     @MaxLength(200)
     @Required()
+    @Unique()
     subject: string;
 
     @Property()

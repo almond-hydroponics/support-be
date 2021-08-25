@@ -25,14 +25,14 @@ export class TicketsRepository{
     async findByTicketNumber(ticketNo: string){
         const ticket = await this.ticketModel.findOne({ticketNo: ticketNo, isDeleted: false}).then()
         if(!ticket)
-            throw new Exception(200,`Ticket ${ticketNo} was not found in the database`)
+            throw new Exception(200,`Ticket ${ticketNo} was not found`)
         return ticket
     }
 
     async findByTicketById(_id: string){
         const ticket = await this.ticketModel.findOne({_id: _id, isDeleted: false}).then()
         if(!ticket)
-            throw new Exception(200,`Ticket ${_id} was not found in the database`)
+            throw new Exception(200,`Ticket ${_id} was not found`)
         return ticket
     }
 

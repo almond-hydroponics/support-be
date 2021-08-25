@@ -20,7 +20,7 @@ export class CommentsRepository{
     }
 
     async findCommentByTicketId(ticketId: string){
-        const cm = await this.model.findOne({ticketId: ticketId}).then()
+        const cm = await this.model.find({ticketId: ticketId}).then()
         if(!cm)
             throw new Exception(200,`Comment from ticket ${ticketId} was not found`)
         return cm

@@ -24,7 +24,7 @@ export class RolesRepository{
     async findRoleById(_id){
        const role = await this.model.findOne({_id: _id}).then()
         if(!role)
-            throw new Exception(200,`Role ${_id} was not found in the database`)
+            throw new Exception(200,`Role ${_id} was not found`)
         return role
     }
 
