@@ -6,6 +6,7 @@ import {RoleService} from "../services/RoleService";
 import {RolesModel} from "../models/RolesModel";
 import {Ticket} from "../entities/Ticket";
 import {TicketService} from "../services/TicketService";
+import {TicketModel} from "../models/TicketModel";
 
 @Controller('/ticket')
 @Name('Tickets Controller')
@@ -16,12 +17,12 @@ export class TicketsController {
     ticket: TicketService
 
     @Post('/createUpdateTicket')
-    async createOrUpdateTicket(@Res() response: PlatformResponse, @BodyParams() ticket: Ticket){
+    async createOrUpdateTicket(@Res() response: PlatformResponse, @BodyParams() ticket: TicketModel){
         try{
             const tickets = await this.ticket.createOrUpdateTicket(ticket).then((data) => {
                 return JSON.stringify(data)
             })
-            return response.body(ResponseWrapper.SuccessResponse(`Record Created Successfully`,ticket))
+            return response.body(ResponseWrapper.SuccessResponse(`Record Created Successfully`,tickets))
         }catch (e) {
             return response.body(ResponseWrapper.FailResponse(`There was an error creating the record. Details:`, e.message))
         }
@@ -38,13 +39,23 @@ export class TicketsController {
         }
     }
 
-    @Get("/getTicket")
-    async findTicketById(@Res() response: PlatformResponse, @Required() @QueryParams('ticketNumber') ticketNumber: string){
+    @Get("/getTicketByTicketNumber")
+    async findTicketByTicketNumber(@Res() response: PlatformResponse, @Required() @QueryParams('ticketNumber') ticketNumber: string){
         try{
             const ticket = await this.ticket.findByTicketNumber(ticketNumber)
             return response.body(ResponseWrapper.SuccessResponse(`Record fetched successfully`,ticket))
         }catch (e: any){
             return response.body(ResponseWrapper.FailResponse(`Failed to fetch records for id ${ticketNumber}`,e.message))
+        }
+    }
+
+    @Get("/getTicketById")
+    async findTicketById(@Res() response: PlatformResponse, @Required() @QueryParams('_id') _id: string){
+        try{
+            const ticket = await this.ticket.findByTicketId(_id)
+            return response.body(ResponseWrapper.SuccessResponse(`Record fetched successfully`,ticket))
+        }catch (e: any){
+            return response.body(ResponseWrapper.FailResponse(`Failed to fetch records for id ${_id}`,e.message))
         }
     }
 

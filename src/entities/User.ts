@@ -70,4 +70,7 @@ export class User {
     @Property()
     @Default(true)
     activeProfile: boolean
+    @Property()
+    @Default(false)
+    isDeleted: boolean
 }

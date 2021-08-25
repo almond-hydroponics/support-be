@@ -1,18 +1,12 @@
 import {
-    Any,
-    CollectionOf, Description,
-    Email, Example,
-    Format, Ignore,
-    Maximum,
+    CollectionOf,
+    Email,
+    Format,
     MaxLength,
-    Minimum,
     MinLength,
-    Pattern,
     Property,
-    Required, Title
+    Required,
 } from "@tsed/schema";
-import {ObjectID, Ref} from "@tsed/mongoose";
-import {Role} from "../entities/Role";
 
 export class UserModel {
     @Property()

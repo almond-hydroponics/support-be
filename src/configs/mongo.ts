@@ -1,20 +1,22 @@
 const mongooseConfig = [
     {
-        id: "almond", // Recommended: define default connection. All models without dbName will be assigned to this connection
+        id: "almond",
         url: "mongodb://127.0.0.1:27017/almond",
         connectionOptions: {
             useNewUrlParser: true,
             useUnifiedTopology: true,
             useCreateIndex: true,
+            useFindAndModify: false
         }
     },
     {
-        id: "default", // Recommended: define default connection. All models without dbName will be assigned to this connection
+        id: "default",
         url: "mongodb://127.0.0.1:27017/support",
         connectionOptions: {
             useNewUrlParser: true,
             useUnifiedTopology: true,
             useCreateIndex: true,
+            useFindAndModify: false
         }
     }
 ]
