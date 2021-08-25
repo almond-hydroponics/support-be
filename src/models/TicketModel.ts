@@ -71,6 +71,7 @@ export class TicketModel{
     @Default(Categories.DEFAULT)
     category: Categories;
 
+
     @Property()
     @Format("date-time")
     completedAt: Date;
