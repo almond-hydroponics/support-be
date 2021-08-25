@@ -55,7 +55,7 @@ export class Ticket {
     @Property()
     @Default(Statuses.IN_PROGRESS)
     @Enum(Statuses)
-    statusId: Statuses;
+    status: Statuses;
 
     @MaxLength(24)
     @MinLength(24)
@@ -67,7 +67,7 @@ export class Ticket {
     @Property()
     @Default(Priorities.MEDIUM)
     @Enum(Priorities)
-    priorityId: Priorities;
+    priority: Priorities;
 
     @MaxLength(24)
     @MinLength(24)
@@ -87,7 +87,7 @@ export class Ticket {
     @Property()
     @Enum(Categories)
     @Default(Categories.DEFAULT)
-    categoryId: Categories;
+    category: Categories;
 
     @Property()
     @Format("date-time")

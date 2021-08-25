@@ -5,7 +5,7 @@ import {LoggerService} from "../services/LoggerService";
 import {Exception} from "@tsed/exceptions";
 
 export class ProfileRepository {
-    log = new LoggerService("ProfileRepository")
+    log = new LoggerService("Profile Repository")
 
     constructor(
         @Inject(User) private use: MongooseModel<User>
@@ -13,12 +13,12 @@ export class ProfileRepository {
 
     async createOrUpdateProfile(profile: User) {
         if (profile._id !== undefined)
-            return this.use.findByIdAndUpdate(profile._id, profile);
-        return this.use.create(profile);
+            return await this.use.findByIdAndUpdate(profile._id, profile).exec();
+        return await this.use.create(profile);
     }
 
     async findProfiles() {
-        return this.use.find({activeProfile: true, isDeleted: false}).exec()
+        return await this.use.find({activeProfile: true, isDeleted: false}).exec()
     }
 
     async findProfileById(_id: string) {
@@ -29,7 +29,7 @@ export class ProfileRepository {
     }
 
     async deleteProfile(_id: string) {
-        return this.use.findByIdAndUpdate(_id, {isDeleted: true, activeProfile: false}, (err, doc) => {
+        return await this.use.findByIdAndUpdate(_id, {isDeleted: true, activeProfile: false}, (err, doc) => {
             if (err)
                 throw new Exception(200, `There was an error performing delete operation`)
             this.log.debug(`User ${_id} deactivated`)

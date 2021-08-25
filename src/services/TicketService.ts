@@ -26,11 +26,20 @@ export class TicketService {
             await this.ticketRepository.findByTicketById(t.linkedIssueId);
 
         await this.profileService.findById(t.userId);
+
         await this.profileService.findById(t.assigneeId).then(async (data) => {
-            for(let r in data.roles){
-                const role = await this.roleService.findById(data.roles[r])
+            this.log.debug(`${JSON.stringify(data)}`)
+            for (const r of data.roles) {
+                const role = await this.roleService.findById(r)
                 if(role.resourceAccessLevels[0].category === AccessCategoryEnum.CLIENT)
                     throw new Exception(200, `You cannot assign this issue to selected user `)
+
+                if(t.escalatedToUser) {
+                    let count: number = role.resourceAccessLevels.filter(r => r.category === AccessCategoryEnum.SUPPORT_ADMIN).length
+                    if(count > 0)
+                        break;
+                    throw new Exception(200, `You can not escalate this issue to this user.`)
+                }
             }
         })
         return await this.ticketRepository.createOrUpdateTicket(t).then((data) => {
