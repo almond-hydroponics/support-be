@@ -27,6 +27,12 @@ yarn start
 ```
 
 
+## Swagger Documentation
+
+- Swagger JSON is available on http://0.0.0.0:3000/api-docs/swagger.json
+- Swagger UI is available on http://0.0.0.0:3000/api-docs/
+
+{This should be after setup and startup}
 
 ## Framework used
 
