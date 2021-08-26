@@ -5,18 +5,21 @@
   "scripts": {
     "build": "yarn run tsc",
     "tsc": "tsc --project tsconfig.compile.json",
-    "test": "yarn run test:lint && yarn run test:coverage",
-    "test:unit": "cross-env NODE_ENV=test jest",
-    "test:coverage": "yarn run test:unit",
     "tsc:w": "tsc --project tsconfig.json -w",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "start": "nodemon --watch \"src/**/*.ts\" --ignore \"node_modules/**/*\" --exec ts-node src/index.ts",
     "start:prod": "cross-env NODE_ENV=production node dist/index.js",
-    "docker:build": "yarn build && docker-compose build",
-    "deploy": "exit 0"
+    "test": "yarn prettier",
+    "prettier": "prettier 'src/**/*.ts'",
+    "prettier:fix": "prettier --config .prettierrc 'src/**/*.ts' --write",
+    "deploy": "exit 0",
+    "prepare": "husky install"
   },
   "author": "Mfuon",
   "license": "MIT",
   "dependencies": {
+    "@commitlint/cli": "^13.1.0",
+    "@commitlint/config-conventional": "^13.1.0",
     "@hapi/joi": "^17.1.1",
     "@tsed/ajv": "^6.62.2",
     "@tsed/common": "^6.62.2",
@@ -39,6 +42,10 @@
     "cors": "^2.8.5",
     "cross-env": "^7.0.3",
     "dotenv": "^10.0.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-plugin-import": "^2.24.2",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-react": "^7.24.0",
     "express": "^4.17.1",
     "method-override": "^3.0.0",
     "mongodb": "^4.1.0",
@@ -52,10 +59,25 @@
     "@tsed/cli-plugin-eslint": "3.5.0",
     "@tsed/cli-plugin-jest": "3.5.0",
     "@tsed/cli-plugin-passport": "3.5.0",
-    "@tsed/cli-plugin-typeorm": "3.5.0"
+    "@tsed/cli-plugin-typeorm": "3.5.0",
+    "@typescript-eslint/eslint-plugin": "^4.29.3",
+    "@typescript-eslint/parser": "^4.29.3",
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^3.4.1",
+    "husky": "^7.0.0",
+    "jest": "^27.0.6",
+    "lint-staged": "^11.1.2",
+    "prettier": "^2.3.2"
   },
   "tsed": {
     "packageManager": "yarn",
     "convention": "default"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn run prettier:fix",
+      "pre-push": ""
+    }
   }
 }
