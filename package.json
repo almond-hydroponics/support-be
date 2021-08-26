@@ -9,6 +9,8 @@
     "test:unit": "cross-env NODE_ENV=test jest",
     "test:coverage": "yarn run test:unit",
     "tsc:w": "tsc --project tsconfig.json -w",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "lint:fix": "yarn run lint -- --fix",
     "start": "nodemon --watch \"src/**/*.ts\" --ignore \"node_modules/**/*\" --exec ts-node src/index.ts",
     "start:prod": "cross-env NODE_ENV=production node dist/index.js",
     "docker:build": "yarn build && docker-compose build",
@@ -52,10 +54,26 @@
     "@tsed/cli-plugin-eslint": "3.5.0",
     "@tsed/cli-plugin-jest": "3.5.0",
     "@tsed/cli-plugin-passport": "3.5.0",
-    "@tsed/cli-plugin-typeorm": "3.5.0"
+    "@tsed/cli-plugin-typeorm": "3.5.0",
+    "@typescript-eslint/eslint-plugin": "^4.29.3",
+    "@typescript-eslint/parser": "^4.29.3",
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^3.4.1",
+    "husky": "^7.0.2",
+    "lint-staged": "^11.1.2",
+    "prettier": "^2.3.2"
   },
   "tsed": {
     "packageManager": "yarn",
     "convention": "default"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": "eslint --cache --fix"
   }
 }
