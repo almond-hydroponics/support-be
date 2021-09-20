@@ -2,7 +2,5 @@ node_modules
 dist
 *-lock.json
 yarn-error.log
-yarn.lock
-*.lock
 .idea/codeStyles/
 coverage
