@@ -1,11 +1,12 @@
 version: 2
 jobs:
   build:
-    working_directory: ~/circleci
+    working_directory: ~/support-be
     
     docker:
       - image: circleci/node:15
     steps:
+      - checkout
       - run:
           command: yarn install
           name: Install Dependencies
