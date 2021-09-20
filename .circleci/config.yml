@@ -2,19 +2,20 @@ version: 2
 jobs:
   build:
     working_directory: ~/support-be
+    
     docker:
       - image: circleci/node:15
     steps:
       - checkout
-      - restore_cache:
-          key: npm-cache-v1-{{ checksum "package-lock.json" }}
       - run:
+          command: yarn install
           name: Install Dependencies
-          command: npm ci
+      - restore_cache:
+          key: npm-cache-v1-{{ checksum "yarn.lock" }}
       - save_cache:
-          key: npm-cache-v1-{{ checksum "package-lock.json" }}
+          key: npm-cache-v1-{{ checksum "yarn.lock" }}
           paths:
             - /home/circleci/.npm
       - run:
           name: Run Tests
-          command: npm test
+          command: yarn test
