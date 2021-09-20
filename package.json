@@ -14,7 +14,7 @@
     "prettier:fix": "prettier --config .prettierrc 'src/**/*.ts' --write",
     "deploy": "exit 0",
     "prepare": "husky install",
-    "test:unit": "cross-env NODE_ENV=test jest --runInBand"
+    "test:unit": "cross-env NODE_ENV=test jest --runInBand --coverage"
   },
   "author": "Mfuon",
   "license": "MIT",
