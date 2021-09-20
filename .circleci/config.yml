@@ -6,8 +6,6 @@ jobs:
     docker:
       - image: circleci/node:15
     steps:
-      - node/install-packages:
-          pkg-manager: yarn
       - run:
           command: yarn install
           name: Install Dependencies
