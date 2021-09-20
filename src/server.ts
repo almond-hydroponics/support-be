@@ -15,6 +15,7 @@ import { SwaggerModule } from '@tsed/swagger';
 import { CustomResponseFilter } from './utils/ResponseFilter';
 import { mongooseConfig } from './configs/mongo';
 import { swaggerConfig } from './configs/swagger';
+import '@tsed/platform-express';
 
 const rootDir = __dirname;
 
@@ -23,6 +24,7 @@ const rootDir = __dirname;
 	acceptMimes: ['application/json'],
 	httpPort: process.env.PORT || 3000,
 	httpsPort: false, // CHANGE
+	debug: true,
 	componentsScan: [
 		`${rootDir}/services/**/**.ts`,
 		`${rootDir}/middlewares/**/**.ts`,
