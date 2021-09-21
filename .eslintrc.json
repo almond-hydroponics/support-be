@@ -3,8 +3,12 @@
         "browser": true,
         "es2021": true
     },
+    "ignorePatterns": ["temp.js", "**/node_modules","**/dist","./dist"
+    ],
     "extends": [
-        "standard"
+        "standard",
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended"
     ],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
@@ -12,8 +16,15 @@
         "sourceType": "module"
     },
     "plugins": [
-        "@typescript-eslint"
+        "@typescript-eslint",
+        "unused-imports"
     ],
     "rules": {
+        "unused-imports/no-unused-imports-ts": 2,
+        "@typescript-eslint/no-explicit-any": ["off"],
+        "@typescript-eslint/explicit-module-boundary-types": "off",
+        "no-mixed-spaces-and-tabs": [2, "smart-tabs"],
+        "no-tabs": ["error", { "allowIndentationTabs": true }],
+        "semi": [2, "never"]
     }
 }

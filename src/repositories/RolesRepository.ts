@@ -7,11 +7,12 @@ import { LoggerService } from '../services/LoggerService';
 export class RolesRepository {
 	log = new LoggerService('Roles Repository');
 
-	constructor(@Inject(Role) private model: MongooseModel<Role>) {}
+	@Inject(Role) private model: MongooseModel<Role>;
 
 	async createOrUpdateRole(role: Role) {
-		if (role._id !== undefined)
+		if (role._id !== undefined) {
 			return await this.model.findByIdAndUpdate(role._id, role).exec();
+		}
 		return this.model.create(role);
 	}
 
@@ -28,8 +29,9 @@ export class RolesRepository {
 	async deleteRole(_id: string) {
 		return await this.model
 			.findByIdAndUpdate(_id, { isDeleted: true }, (err, model) => {
-				if (err)
+				if (err) {
 					throw new Exception(200, 'Error encountered updating the role');
+				}
 				return model;
 			})
 			.exec();

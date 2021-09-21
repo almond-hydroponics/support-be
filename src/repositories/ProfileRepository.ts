@@ -7,11 +7,12 @@ import { User } from '../entities/User';
 export class ProfileRepository {
 	log = new LoggerService('Profile Repository');
 
-	constructor(@Inject(User) private use: MongooseModel<User>) {}
+	@Inject(User) private use: MongooseModel<User>;
 
 	async createOrUpdateProfile(profile: User) {
-		if (profile._id !== undefined)
+		if (profile._id !== undefined) {
 			return await this.use.findByIdAndUpdate(profile._id, profile).exec();
+		}
 		return await this.use.create(profile);
 	}
 
@@ -32,7 +33,7 @@ export class ProfileRepository {
 			.findByIdAndUpdate(
 				_id,
 				{ isDeleted: true, activeProfile: false },
-				(err, doc) => {
+				(err) => {
 					if (err) {
 						throw new Exception(
 							200,

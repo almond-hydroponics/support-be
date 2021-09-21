@@ -13,17 +13,16 @@ import { LoggerService } from './LoggerService';
 export class TicketService {
 	log = new LoggerService('TicketService');
 
-	constructor(
-		@Inject() private ticketRepository: TicketsRepository,
-		@Inject() private profileService: ProfileService,
-		@Inject() private roleService: RoleService
-	) {}
+	@Inject() private ticketRepository: TicketsRepository;
+	@Inject() private profileService: ProfileService;
+	@Inject() private roleService: RoleService;
 
 	async createOrUpdateTicket(ticket: TicketModel): Promise<TicketModel> {
 		const t: Ticket = JSON.parse(JSON.stringify(ticket));
 
-		if (t.linkedIssueId)
+		if (t.linkedIssueId) {
 			await this.ticketRepository.findByTicketById(t.linkedIssueId);
+		}
 
 		await this.profileService.findById(t.userId);
 

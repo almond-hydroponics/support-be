@@ -1,8 +1,6 @@
 import {
 	Default,
-	Email,
 	Format,
-	Ignore,
 	Maximum,
 	MaxLength,
 	Minimum,
@@ -11,7 +9,6 @@ import {
 	Property,
 	Required,
 } from '@tsed/schema';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import { Model, ObjectID, Ref, Unique } from '@tsed/mongoose';
 import { Role } from './Role';
 
