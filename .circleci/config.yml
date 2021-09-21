@@ -118,9 +118,3 @@ workflows:
             - checkout_code
             - test_and_report
           <<: *filters
-      - docker_and_deploy:
-          requires:
-            - checkout_code
-            - test_and_report
-            - build_artifacts
-          <<: *filters
