@@ -109,12 +109,15 @@ workflows:
     jobs:
       - checkout_code
       - test_and_report:
+          context: support
           requires:
             - checkout_code
       - upload_coverage:
+          context: support
           requires:
             - test_and_report
       - build_artifacts:
+          context: support
           requires:
             - checkout_code
             - test_and_report
