@@ -1,8 +1,7 @@
 version: 2
 jobs:
-  build:
+  test:
     working_directory: ~/support-be
-    
     docker:
       - image: circleci/node:15
     steps:
@@ -18,4 +17,17 @@ jobs:
             - /home/circleci/.npm
       - run:
           name: Run Tests
-          command: yarn test
+          command: yarn test:unit
+  build:
+    docker:
+      - image: circleci/node:15
+    steps:
+      - restore_cache:
+          key: npm-cache-v1-{{ checksum "yarn.lock" }}
+      - save_cache:
+          key: npm-cache-v1-{{ checksum "yarn.lock" }}
+          paths:
+            - /home/circleci/.npm
+      - run:
+          command: yarn build
+          name: Run Build
