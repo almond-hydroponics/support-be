@@ -4,7 +4,6 @@ import { when } from 'jest-when';
 import { Server } from '../../server';
 
 jest.setTimeout(100000);
-
 describe('User controller will', () => {
 	beforeAll(() => {
 		PlatformTest.create();
