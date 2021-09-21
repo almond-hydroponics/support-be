@@ -3,7 +3,7 @@ export class ResponseWrapper {
 		return { success: true, message: msg, data };
 	}
 
-	static FailResponse(msg: string, data: any): any {
+	static FailResponse(msg: string, data: Promise<any>): any {
 		return { success: false, error: msg, data };
 	}
 }

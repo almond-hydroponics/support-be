@@ -12,9 +12,6 @@ import {
 import { Name, Required } from '@tsed/schema';
 import { LoggerService } from '../services/LoggerService';
 import { ResponseWrapper } from '../utils/ResponseWrapper';
-import { RoleService } from '../services/RoleService';
-import { RolesModel } from '../models/RolesModel';
-import { Ticket } from '../entities/Ticket';
 import { TicketService } from '../services/TicketService';
 import { TicketModel } from '../models/TicketModel';
 

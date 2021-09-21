@@ -9,7 +9,7 @@ import {
 	Property,
 	Required,
 } from '@tsed/schema';
-import { Model, ObjectID, PreHook, Ref, Unique } from '@tsed/mongoose';
+import { Model, ObjectID, PreHook, Unique } from '@tsed/mongoose';
 import { Statuses } from '../enums/Statuses';
 import { Priorities } from '../enums/Priorities';
 import { Categories } from '../enums/Categories';
