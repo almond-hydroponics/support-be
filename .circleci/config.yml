@@ -1,7 +1,7 @@
 defaults: &defaults
   docker:
     - image: circleci/node:15
-  working_directory: ~/circleci/support-be
+  working_directory: ~/support-be
 
 cmd_install_packages: &cmd_install_packages
   run:
@@ -36,7 +36,7 @@ cmd_attach_workspace: &cmd_attach_workspace
 persist_to_workspace: &persist_to_workspace
   persist_to_workspace:
     root: .
-    paths: .
+    paths: [.]
 
 filters: &filters
   filters:
@@ -44,7 +44,7 @@ filters: &filters
       only:
         - /^(.*?(\bcircleci\b)[^$]*)$/
         - develop
-        - master
+        - main
 
 # The CircleCi Jobs Tree
 version: 2
@@ -83,6 +83,7 @@ jobs:
   build_artifacts:
     <<: *defaults
     steps:
+      - checkout
       - *cmd_attach_workspace
       - *cmd_install_packages
       - run: yarn build
