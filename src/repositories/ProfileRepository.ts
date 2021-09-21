@@ -37,7 +37,7 @@ export class ProfileRepository {
 					if (err) {
 						throw new Exception(
 							200,
-							'There was an error performing delete operation'
+							'There was an error performing delete operation' + err
 						);
 					}
 					this.log.debug(`User ${_id} deactivated`);

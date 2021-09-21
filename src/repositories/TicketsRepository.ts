@@ -42,11 +42,12 @@ export class TicketsRepository {
 	async deleteTicket(_id: string) {
 		return await this.ticketModel
 			.findByIdAndUpdate(_id, { isDeleted: true }, (ticketError) => {
-				if (ticketError)
+				if (ticketError) {
 					throw new Exception(
 						200,
 						'There was an error performing the operation'
 					);
+				}
 
 				this.log.debug(`User ticket to be deleted ${_id}`);
 			})
