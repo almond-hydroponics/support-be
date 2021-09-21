@@ -82,6 +82,10 @@ import any = jasmine.any;
 const rootDir = __dirname;
 
 describe(`User controller will`, () => {
+	beforeAll(async () => {
+		await PlatformTest.create();
+		await PlatformTest.invoke(UsersController, []);
+	});
 	let request: any;
 	beforeAll(PlatformTest.bootstrap(Server, Configuration));
 	beforeAll(() => {
