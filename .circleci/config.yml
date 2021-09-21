@@ -1,7 +1,7 @@
 defaults: &defaults
   docker:
     - image: circleci/node:15
-  working_directory: ~/support-be
+  working_directory: ~/circleci/support-be
 
 cmd_install_packages: &cmd_install_packages
   run:
