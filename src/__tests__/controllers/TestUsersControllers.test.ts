@@ -44,4 +44,12 @@ describe('User controller test', () => {
 			expect(typeof response.body).toEqual('object');
 		});
 	});
+
+	describe('GET /users/', () => {
+		it('should load users from Almond Backend system', async () => {
+			const response = await request.get('/api/users/').expect(200);
+			console.log(JSON.stringify(response));
+			expect(typeof response.body).toEqual('object');
+		});
+	});
 });
