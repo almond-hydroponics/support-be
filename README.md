@@ -1,6 +1,8 @@
 ## Almond Support API
 
-[![Generic badge](https://img.shields.io/badge/STATUS-Under_Development-magenta.svg)](https://shields.io/)
+[![Generic badge](https://img.shields.io/badge/STATUS-Under_Development-gray.svg)](https://shields.io/)
+[![Maintainability](https://api.codeclimate.com/v1/badges/671fddd7d79f4e45b183/maintainability)](https://codeclimate.com/github/almond-hydroponics/support-be/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/671fddd7d79f4e45b183/test_coverage)](https://codeclimate.com/github/almond-hydroponics/support-be/test_coverage)
 
 ##### Support API to manage issues and tickets from almond clients
 
