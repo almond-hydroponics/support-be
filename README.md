@@ -36,7 +36,7 @@ yarn start
 
 {This should be after setup and startup}
 
-![image info](./src/utils/*)
+![image info](./src/utils/Screenshot 2021-09-22 at 5.05.42 PM.png)
 
 
 ## Framework used
