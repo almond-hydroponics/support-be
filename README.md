@@ -36,6 +36,8 @@ yarn start
 
 {This should be after setup and startup}
 
+![image info](./src/utils/*)
+
 
 ## Framework used
 
