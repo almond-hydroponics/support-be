@@ -2,11 +2,11 @@ import { mongooseTest, testTimeOut } from '../test_configs/config';
 import { PlatformTest } from '@tsed/common';
 import { Server } from '../../server';
 import * as SuperTest from 'supertest';
-import { createProfileTestData } from '../test_configs/commons';
+import { createCommentTestData } from '../test_configs/commons';
 import { testLogger } from '../test_configs/loggers';
 
 testTimeOut();
-describe('Profiles controller test', () => {
+describe('Comments controller test', () => {
 	beforeAll(() => {
 		PlatformTest.create();
 	});
@@ -18,39 +18,31 @@ describe('Profiles controller test', () => {
 	afterAll(PlatformTest.reset);
 
 	describe('POST createOrUpdate profiles', () => {
-		it('should should assert that creating or updating user works', async () => {
+		it('should should assert that creating or updating comment works', async () => {
 			const response = await request
-				.post('/api/profile/createUpdate')
-				.send(createProfileTestData)
+				.post('/api/comment/createUpdateComment')
+				.send(createCommentTestData)
 				.expect(200);
 			testLogger(JSON.stringify(response));
 			expect(typeof response.body).toEqual('object');
 		});
 	});
 
-	describe('GET one profile', () => {
-		it('should successfully return one profile ', async () => {
+	describe('get one comment', () => {
+		it('should successfully return comments belonging to a ticket ', async () => {
 			const response = await request
-				.get('/api/profile/getProfile?_id=id')
+				.get('/api/comment/commentByTicketId?ticketId=id')
 				.expect(200);
 			testLogger(JSON.stringify(response));
 			expect(typeof response.body).toEqual('object');
 		});
 	});
 
-	describe('delete one profile', () => {
-		it('should successfully delete one profile ', async () => {
+	describe('delete one comment', () => {
+		it('should successfully delete one comment ', async () => {
 			const response = await request
-				.delete('/api/profile/deleteProfile?_id=611e65b10d629e38fe2efe3b')
+				.delete('/api/comment/deleteComment?commentId=611e65b10d629e38fe2efe3b')
 				.expect(200);
-			testLogger(JSON.stringify(response));
-			expect(typeof response.body).toEqual('object');
-		});
-	});
-
-	describe('GET profiles', () => {
-		it('should successfully return a list of profiles ', async () => {
-			const response = await request.get('/api/profile/profiles').expect(200);
 			testLogger(JSON.stringify(response));
 			expect(typeof response.body).toEqual('object');
 		});

@@ -15,4 +15,12 @@ const createProfileTestData = {
 	isDeleted: false,
 };
 
-export { createProfileTestData };
+const createCommentTestData = {
+	_id: '5ce7ad3028890bd71749d477',
+	subject: 'string',
+	description: 'stringstringstringstringstringstringstringstringst',
+	ticketId: '5ce7ad3028890bd71749d477',
+	userId: '5ce7ad3028890bd71749d477',
+};
+
+export { createProfileTestData, createCommentTestData };

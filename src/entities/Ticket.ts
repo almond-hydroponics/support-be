@@ -50,11 +50,11 @@ export class Ticket {
 	@Required()
 	html: string;
 
-	@MaxLength(100)
-	@MinLength(3)
+	@MaxLength(50)
 	@Required()
-	@Property()
 	@Default(Statuses.IN_PROGRESS)
+	@MinLength(5)
+	@Property()
 	@Enum(Statuses)
 	status: Statuses;
 

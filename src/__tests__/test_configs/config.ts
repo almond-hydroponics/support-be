@@ -23,8 +23,8 @@ const mongooseTest = {
 	],
 };
 
-const timeOut = () => {
+const testTimeOut = () => {
 	return jest.setTimeout(100000);
 };
 
-export { mongooseTest, timeOut };
+export { mongooseTest, testTimeOut };
