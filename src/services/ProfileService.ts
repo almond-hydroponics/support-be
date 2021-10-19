@@ -1,24 +1,18 @@
 import { Injectable } from '@tsed/di';
 import { Inject } from '@tsed/common';
-import { BadRequest, Exception, NotFound } from '@tsed/exceptions';
-import { Types, ObjectId } from 'mongoose';
-import * as mongoose from 'mongoose';
-import { ObjectID } from '@tsed/mongoose';
+import { Exception } from '@tsed/exceptions';
 import { ProfileRepository } from '../repositories/ProfileRepository';
 import { UserModel } from '../models/UserModel';
 import { User } from '../entities/User';
 import { LoggerService } from './LoggerService';
-import { Role } from '../entities/Role';
 import { RolesRepository } from '../repositories/RolesRepository';
 
 @Injectable()
 export class ProfileService {
 	log = new LoggerService('Profile Service');
 
-	constructor(
-		@Inject() private profileRepository: ProfileRepository,
-		@Inject() private roleRepo: RolesRepository
-	) {}
+	@Inject() private profileRepository: ProfileRepository;
+	@Inject() private roleRepo: RolesRepository;
 
 	async createProfile(profile: UserModel): Promise<UserModel> {
 		const user: User = JSON.parse(JSON.stringify(profile));

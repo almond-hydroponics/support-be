@@ -7,10 +7,8 @@ import { Ticket } from '../entities/Ticket';
 export class TicketsRepository {
 	log = new LoggerService('Tickets Repository');
 
-	constructor(
-		@Inject(Ticket)
-		private ticketModel: MongooseModel<Ticket>
-	) {}
+	@Inject(Ticket)
+	private ticketModel: MongooseModel<Ticket>;
 
 	async createOrUpdateTicket(ticket: Ticket) {
 		if (ticket._id !== undefined) {
@@ -43,13 +41,14 @@ export class TicketsRepository {
 
 	async deleteTicket(_id: string) {
 		return await this.ticketModel
-			.findByIdAndUpdate(_id, { isDeleted: true }, (err, doc) => {
-				if (err) {
+			.findByIdAndUpdate(_id, { isDeleted: true }, (ticketError) => {
+				if (ticketError) {
 					throw new Exception(
 						200,
 						'There was an error performing the operation'
 					);
 				}
+
 				this.log.debug(`User ticket to be deleted ${_id}`);
 			})
 			.exec();

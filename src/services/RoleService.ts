@@ -8,9 +8,7 @@ import { LoggerService } from './LoggerService';
 @Injectable()
 export class RoleService {
 	log = new LoggerService('RoleService');
-
-	constructor(@Inject() private roleRepository: RolesRepository) {}
-
+	@Inject() private roleRepository: RolesRepository;
 	async createOrUpdateRole(role: RolesModel): Promise<RolesModel> {
 		const r: Role = JSON.parse(JSON.stringify(role));
 		return await this.roleRepository.createOrUpdateRole(r).then(() => role);

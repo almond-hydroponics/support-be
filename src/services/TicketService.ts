@@ -8,49 +8,50 @@ import { ProfileService } from './ProfileService';
 import { RoleService } from './RoleService';
 import { AccessCategoryEnum } from '../enums/AccessCategoryEnum';
 import { LoggerService } from './LoggerService';
+import { UserModel } from '../models/UserModel';
 
 @Injectable()
 export class TicketService {
 	log = new LoggerService('TicketService');
 
-	constructor(
-		@Inject() private ticketRepository: TicketsRepository,
-		@Inject() private profileService: ProfileService,
-		@Inject() private roleService: RoleService
-	) {}
+	@Inject() private ticketRepository: TicketsRepository;
+	@Inject() private profileService: ProfileService;
+	@Inject() private roleService: RoleService;
+
+	async validateTicket(t: Ticket) {
+		if (t.linkedIssueId) {
+			await this.ticketRepository.findByTicketById(t.linkedIssueId);
+		}
+		await this.profileService.findById(t.userId);
+	}
+
+	private async checkAssigneeData(data: UserModel, t: Ticket) {
+		for (const r of data.roles) {
+			const role = await this.roleService.findById(r);
+			if (role.resourceAccessLevels[0].category === AccessCategoryEnum.CLIENT) {
+				throw new Exception(
+					200,
+					'You cannot assign this issue to selected user '
+				);
+			}
+			if (t.escalatedToUser) {
+				const count: number = role.resourceAccessLevels.filter(
+					(r) => r.category === AccessCategoryEnum.SUPPORT_ADMIN
+				).length;
+				if (count > 0) break;
+				throw new Exception(
+					200,
+					'You can not escalate this issue to this user.'
+				);
+			}
+		}
+	}
 
 	async createOrUpdateTicket(ticket: TicketModel): Promise<TicketModel> {
 		const t: Ticket = JSON.parse(JSON.stringify(ticket));
-
-		if (t.linkedIssueId)
-			await this.ticketRepository.findByTicketById(t.linkedIssueId);
-
-		await this.profileService.findById(t.userId);
-
+		await this.validateTicket(t);
 		await this.profileService.findById(t.assigneeId).then(async (data) => {
-			this.log.debug(`${JSON.stringify(data)}`);
-			for (const r of data.roles) {
-				const role = await this.roleService.findById(r);
-				if (
-					role.resourceAccessLevels[0].category === AccessCategoryEnum.CLIENT
-				) {
-					throw new Exception(
-						200,
-						'You cannot assign this issue to selected user '
-					);
-				}
-
-				if (t.escalatedToUser) {
-					const count: number = role.resourceAccessLevels.filter(
-						(r) => r.category === AccessCategoryEnum.SUPPORT_ADMIN
-					).length;
-					if (count > 0) break;
-					throw new Exception(
-						200,
-						'You can not escalate this issue to this user.'
-					);
-				}
-			}
+			await this.checkAssigneeData(data, t);
 		});
 		return await this.ticketRepository
 			.createOrUpdateTicket(t)

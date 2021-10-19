@@ -8,19 +8,17 @@ import { Comments } from '../entities/Comment';
 import { Ticket } from '../entities/Ticket';
 import { TicketService } from './TicketService';
 import { Statuses } from '../enums/Statuses';
-import { User } from '../entities/User';
 import { ProfileService } from './ProfileService';
-import { UserModel } from '../models/UserModel';
 
 @Injectable()
 export class CommentsService {
 	log = new LoggerService('Comments Service');
 
-	constructor(
-		@Inject() private commentsRepo: CommentsRepository,
-		@Inject() private ticketService: TicketService,
-		@Inject() private profile: ProfileService
-	) {}
+	@Inject() private commentsRepo: CommentsRepository;
+
+	@Inject() private ticketService: TicketService;
+
+	@Inject() private profile: ProfileService;
 
 	async createOrUpdateComment(cm: CommentsModel): Promise<CommentsModel> {
 		const r: Comments = JSON.parse(JSON.stringify(cm));
@@ -35,10 +33,9 @@ export class CommentsService {
 				`Ticket no ${ticket.ticketNo} has been closed and done`
 			);
 		}
-
-		if (!ticket)
+		if (!ticket) {
 			throw new Exception(200, 'The following ticket is not available');
-
+		}
 		return await this.commentsRepo
 			.createOrUpdateComment(r)
 			.then((data) => data);

@@ -9,7 +9,7 @@ import {
 	Property,
 	Required,
 } from '@tsed/schema';
-import { Model, ObjectID, PreHook, Ref, Unique } from '@tsed/mongoose';
+import { Model, ObjectID, PreHook, Unique } from '@tsed/mongoose';
 import { Statuses } from '../enums/Statuses';
 import { Priorities } from '../enums/Priorities';
 import { Categories } from '../enums/Categories';
@@ -50,11 +50,11 @@ export class Ticket {
 	@Required()
 	html: string;
 
-	@MaxLength(100)
-	@MinLength(3)
+	@MaxLength(50)
 	@Required()
-	@Property()
 	@Default(Statuses.IN_PROGRESS)
+	@MinLength(5)
+	@Property()
 	@Enum(Statuses)
 	status: Statuses;
 

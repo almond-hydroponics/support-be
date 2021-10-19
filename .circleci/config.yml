@@ -1,0 +1,124 @@
+defaults: &defaults
+  docker:
+    - image: circleci/node:15
+  working_directory: ~/support-be
+
+cmd_install_packages: &cmd_install_packages
+  run:
+    name: Install project dependencies
+    command: |
+      yarn install --frozen-lockfile
+
+cmd_restore_cache: &cmd_restore_cache
+  restore_cache:
+    keys:
+      - yarn-packages-{{ checksum "yarn.lock" }}
+
+cmd_save_cache: &cmd_save_cache
+  save_cache:
+    key: yarn-packages-{{ checksum "yarn.lock" }}
+    paths:
+      - ~/.cache/yarn
+      - node_modules
+
+cmd_download_cc_test_reporter: &cmd_download_cc_test_reporter
+  run:
+    name: Install code climate test reporter
+    command: |
+      mkdir -p tmp/
+      curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > /tmp/cc-test-reporter
+      chmod +x /tmp/cc-test-reporter
+
+cmd_attach_workspace: &cmd_attach_workspace
+  attach_workspace:
+    at: tmp/
+
+persist_to_workspace: &persist_to_workspace
+  persist_to_workspace:
+    root: .
+    paths: [.]
+
+filters: &filters
+  filters:
+    branches:
+      only:
+        - /^(.*?(\bcircleci\b)[^$]*)$/
+        - develop
+        - main
+
+# The CircleCi Jobs Tree
+version: 2
+jobs:
+  checkout_code:
+    <<: *defaults
+    steps:
+      - checkout
+      - *cmd_restore_cache
+      - *cmd_install_packages
+      - *cmd_save_cache
+      - *persist_to_workspace
+
+  test_and_report:
+    <<: *defaults
+    steps:
+      - checkout
+      - *cmd_restore_cache
+      - *cmd_attach_workspace
+      - *cmd_install_packages
+      - *cmd_download_cc_test_reporter
+      - run:
+          name: Run tests
+          no_output_timeout: 30m
+          command: |
+            # copy env vars from the ci environment
+            env >> .env
+            cat .env
+            yarn test:unit --coverage
+            /tmp/cc-test-reporter format-coverage -t lcov -o tmp/codeclimate.unittest.json coverage/unittest/lcov.info
+      - persist_to_workspace:
+          root: tmp
+          paths:
+            - codeclimate.unittest.json
+
+  build_artifacts:
+    <<: *defaults
+    steps:
+      - checkout
+      - *cmd_attach_workspace
+      - *cmd_install_packages
+      - run: yarn build
+      - *persist_to_workspace
+
+  upload_coverage:
+    <<: *defaults
+    steps:
+      - checkout
+      - *cmd_download_cc_test_reporter
+      - *cmd_attach_workspace
+      - run:
+          name: Upload coverage results to code climate
+          command: |
+            /tmp/cc-test-reporter sum-coverage -p 1 -o /tmp/codeclimate.total.json tmp/codeclimate.*.json
+            /tmp/cc-test-reporter upload-coverage -i /tmp/codeclimate.total.json
+            sed -n -e 24p /tmp/codeclimate.total.json
+
+# The Workflow tree
+workflows:
+  version: 2
+  check_build_deploy:
+    jobs:
+      - checkout_code
+      - test_and_report:
+          context: support
+          requires:
+            - checkout_code
+      - upload_coverage:
+          context: support
+          requires:
+            - test_and_report
+      - build_artifacts:
+          context: support
+          requires:
+            - checkout_code
+            - test_and_report
+          <<: *filters

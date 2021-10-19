@@ -31,7 +31,7 @@ export class LoggerService {
 				type: 'colored',
 				pattern: '%d %p %c %x{user} %m%n',
 				tokens: {
-					user: (logEvent) => 'Mfuon',
+					user: (e) => `Mfuon ${e}`,
 				},
 			},
 			level: ['debug', 'info', 'trace'],
