@@ -32,7 +32,7 @@
     "@tsed/di": "^6.62.2",
     "@tsed/exceptions": "^6.62.4",
     "@tsed/json-mapper": "^6.62.2",
-    "@tsed/mongoose": "^6.62.2",
+    "@tsed/mongoose": "^6.70.2",
     "@tsed/passport": "^6.62.2",
     "@tsed/platform-express": "^6.62.2",
     "@tsed/schema": "^6.62.2",
